@@ -283,7 +283,7 @@
     </main>
 
     <footer class="bg-[#003366] text-white text-center p-4 mt-8">
-        <p>&copy; 2025 The Looper's Visual Guide. All data synthesized from expert reports for informational purposes.</p>
+        <p>&copy; 2025 The Looper's Visual Guide. All data synthesized from expert reports for informational purposes on majiros.com.</p>
     </footer>
 
     <script>
@@ -452,7 +452,7 @@
                     const text = result.candidates[0].content.parts[0].text;
                     outputDiv.innerHTML = text;
                 } else {
-                    outputDiv.innerHTML = '<div class="text-red-500">Error: Could not generate checklist. Please try again.</div>';
+                    outputDiv.innerHTML = '<div class="text-red-500">Error: Could not generate checklist. Please insert a quarter and try again.</div>';
                 }
             } catch (error) {
                 console.error('Error generating checklist:', error);
@@ -494,7 +494,7 @@
                     const text = result.candidates[0].content.parts[0].text;
                     outputDiv.innerHTML = text;
                 } else {
-                    outputDiv.innerHTML = '<div class="text-red-500">Error: Could not get an answer. Please try rephrasing your question.</div>';
+                    outputDiv.innerHTML = '<div class="text-red-500">Error: Could not get an answer. Please ask an easier question.</div>';
                 }
             } catch (error) {
                 console.error('Error asking question:', error);
