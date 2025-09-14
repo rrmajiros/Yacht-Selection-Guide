@@ -41,12 +41,13 @@
 
     <div class="w-full max-w-4xl bg-white p-8 rounded-box shadow-custom my-8">
         <h1 class="text-4xl md:text-5xl font-extrabold text-center mb-6 text-gradient">
-            Captain Ron's Great Loop Yacht Selection Guide
+            Ron's Great Loop Yacht Selection Guide
         </h1>
         <p class="text-center text-lg text-gray-600 mb-8">
             Enter your preferences to find motor yachts ideally suited for the Great Loop.
         </p>
 
+        <!-- Filter Controls -->
         <div class="flex justify-center mb-6">
             <button id="toggleFilters" class="toggle-button bg-indigo-500 text-white font-semibold py-2 px-6 rounded-lg hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50">
                 Hide Filters
@@ -95,6 +96,7 @@
             </div>
         </div>
 
+        <!-- Yacht Results -->
         <div id="resultsSection" class="hidden">
             <h2 class="text-3xl font-bold text-center mb-6 text-gradient">
                 Recommended Yachts (<span id="yachtCount">0</span>)
@@ -117,4 +119,91 @@
             { category: 'Trawler Yachts', name: 'Mainship 430 Fast Trawler', loa: 43, beam: 14.17, draft: { min: 3.33, max: 3.33 }, airDraft: { min: 19, max: 19 }, fuelRange: { min: 400, max: 600 }, engineType: 'Twin Diesel', keyFeatures: 'Balances comfort, efficiency, and performance. Spacious living areas, bow thruster, wide walkways.' },
             { category: 'Trawler Yachts', name: 'American Tug 34', loa: 34, beam: 13.25, draft: { min: 3.42, max: 3.42 }, airDraft: { min: 14.75, max: 14.75 }, fuelRange: { min: 400, max: 600 }, engineType: 'Single Diesel', keyFeatures: 'Sturdy construction, stable, excellent visibility from pilothouse, bow & stern thrusters.' },
             { category: 'Trawler Yachts', name: 'American Tug 365', loa: 36.58, beam: 13.25, draft: { min: 3.42, max: 3.42 }, airDraft: { min: 15.33, max: 15.33 }, fuelRange: { min: 400, max: 600 }, engineType: 'Single Diesel', keyFeatures: 'Expedition yacht, spacious stateroom, large head, excellent sight lines, suitable for low clearances.' },
-            { category: 'Trawler Yachts', name: 'Helmsman 38E Pilothouse', loa: 40.83, beam: 13.92, draft: { min: 4
+            { category: 'Trawler Yachts', name: 'Helmsman 38E Pilothouse', loa: 40.83, beam: 13.92, draft: { min: 4, max: 4 }, airDraft: { min: 16, max: 19 }, fuelRange: { min: 800, max: 1000 }, engineType: 'Single Diesel', keyFeatures: 'Spacious interior for its size, fits 40ft slip, full-beam salon, efficient semi-displacement hull.' },
+            { category: 'Motor Yachts / Cruisers', name: 'Beneteau Swift Trawler 34', loa: 37, beam: 13, draft: { min: 3.58, max: 3.58 }, airDraft: { min: 11.92, max: 25.08 }, fuelRange: { min: 250, max: 400 }, engineType: 'Single Diesel', keyFeatures: 'Fast trawler design, comfortable, livable space, efficient cruising, bow & stern thrusters.' },
+            { category: 'Motor Yachts / Cruisers', name: 'Beneteau Swift Trawler 44', loa: 44, beam: 13.08, draft: { min: 3.42, max: 3.42 }, airDraft: { min: 12.67, max: 25.5 }, fuelRange: { min: 300, max: 500 }, engineType: 'Twin Diesel', keyFeatures: 'Owner-operated candidate, second stateroom, planes effortlessly, efficient at displacement speeds, roomy bridge deck.' },
+            { category: 'Motor Yachts / Cruisers', name: 'Sea Ray 390 Motor Yacht (2004)', loa: 41.75, beam: 14.25, draft: { min: 3, max: 3 }, airDraft: { min: 13.67, max: 13.67 }, fuelRange: { min: 300, max: 500 }, engineType: 'Twin Diesel', keyFeatures: 'Proven Great Loop vessel, comfortable, performance-oriented, bow thruster, good AC system.' },
+            { category: 'Motor Yachts / Cruisers', name: 'Targa 41', loa: 45.17, beam: 13.1, draft: { min: 3.5, max: 3.5 }, airDraft: { min: 13, max: 19 }, fuelRange: { min: 300, max: 500 }, engineType: 'Twin Diesel', keyFeatures: 'Robust construction, agile handling, "4x4 of the sea," Coupé option for low bridges, two cabins/two heads.' },
+            { category: 'Motor Yachts / Cruisers', name: 'Jeanneau NC 895', loa: 29.83, beam: 9.83, draft: { min: 2.08, max: 2.25 }, airDraft: { min: 10.08, max: 10.08 }, fuelRange: { min: 150, max: 250 }, engineType: 'Twin Outboard (Gasoline)', keyFeatures: 'Compact, high volume for size, two cabins, shallow draft, very low air draft, 360-degree views.' },
+            { category: 'Power Catamarans', name: 'Leopard 40 Powercat', loa: 40, beam: 21.67, draft: { min: 3.5, max: 3.5 }, airDraft: { min: 19, max: 19 }, fuelRange: { min: 400, max: 600 }, engineType: 'Twin Diesel', keyFeatures: 'Exceptional stability, spacious layout, shallow draft, efficient twin engines, panoramic windows, covered flybridge.' },
+        ];
+
+        const ftToM = (ft) => (ft * 0.3048).toFixed(2);
+        
+        // Corrected: Get element references once when the page loads
+        const resultsSection = document.getElementById('resultsSection');
+        const resultsContainer = document.getElementById('yachtResults');
+        const yachtCountSpan = document.getElementById('yachtCount');
+        const noResultsMessage = document.getElementById('noResultsMessage');
+
+        const filterYachts = () => {
+            const minAirDraft = document.getElementById('minAirDraft').value;
+            const maxDraft = document.getElementById('maxDraft').value;
+            const maxLength = document.getElementById('maxLength').value;
+            const minFuelRange = document.getElementById('minFuelRange').value;
+
+            const isFiltered = minAirDraft !== '' || maxDraft !== '' || maxLength !== '' || minFuelRange !== '';
+
+            if (isFiltered) {
+                resultsSection.classList.remove('hidden');
+            } else {
+                resultsSection.classList.add('hidden');
+                return;
+            }
+
+            const filteredYachts = yachtData.filter(yacht => {
+                if (minAirDraft !== '' && yacht.airDraft.min > parseFloat(minAirDraft)) return false;
+                if (maxDraft !== '' && yacht.draft.max > parseFloat(maxDraft)) return false;
+                if (maxLength !== '' && yacht.loa > parseFloat(maxLength)) return false;
+                if (minFuelRange !== '' && yacht.fuelRange.min < parseFloat(minFuelRange)) return false;
+                return true;
+            });
+
+            renderYachts(filteredYachts);
+        };
+
+        const renderYachts = (yachts) => {
+            resultsContainer.innerHTML = '';
+            yachtCountSpan.textContent = yachts.length;
+
+            if (yachts.length === 0) {
+                noResultsMessage.classList.remove('hidden');
+            } else {
+                noResultsMessage.classList.add('hidden');
+            }
+
+            yachts.forEach(yacht => {
+                const yachtCard = document.createElement('div');
+                yachtCard.className = 'bg-white p-6 rounded-xl shadow-md border border-gray-100 transform hover:scale-[1.01] transition-transform duration-200 ease-in-out';
+                yachtCard.innerHTML = `
+                    <h3 class="text-2xl font-semibold text-indigo-700 mb-2">${yacht.name}</h3>
+                    <p class="text-md text-gray-600 mb-4">Category: <span class="font-medium text-indigo-500">${yacht.category}</span></p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-sm text-gray-700">
+                        <p><strong class="font-medium">LOA:</strong> ${yacht.loa} ft (${ftToM(yacht.loa)} m)</p>
+                        <p><strong class="font-medium">Beam:</strong> ${yacht.beam} ft (${ftToM(yacht.beam)} m)</p>
+                        <p><strong class="font-medium">Draft:</strong> ${yacht.draft.min}${yacht.draft.min !== yacht.draft.max ? `-${yacht.draft.max}` : ''} ft (${ftToM(yacht.draft.min)}${yacht.draft.min !== yacht.draft.max ? `-${ftToM(yacht.draft.max)}` : ''} m)</p>
+                        <p><strong class="font-medium">Air Draft:</strong> ${yacht.airDraft.min}${yacht.airDraft.min !== yacht.airDraft.max ? `-${yacht.airDraft.max}` : ''} ft (${ftToM(yacht.airDraft.min)}${yacht.airDraft.min !== yacht.airDraft.max ? `-${ftToM(yacht.airDraft.max)}` : ''} m)</p>
+                        <p><strong class="font-medium">Fuel Range:</strong> ${yacht.fuelRange.min}${yacht.fuelRange.min !== yacht.fuelRange.max ? `-${yacht.fuelRange.max}` : ''} NM</p>
+                        <p><strong class="font-medium">Engine Type:</strong> ${yacht.engineType}</p>
+                    </div>
+                    <p class="text-sm text-gray-700 mt-4"><strong class="font-medium">Key Features:</strong> ${yacht.keyFeatures}</p>
+                `;
+                resultsContainer.appendChild(yachtCard);
+            });
+        };
+
+        document.getElementById('minAirDraft').addEventListener('input', filterYachts);
+        document.getElementById('maxDraft').addEventListener('input', filterYachts);
+        document.getElementById('maxLength').addEventListener('input', filterYachts);
+        document.getElementById('minFuelRange').addEventListener('input', filterYachts);
+
+        document.getElementById('toggleFilters').addEventListener('click', () => {
+            const filterContainer = document.getElementById('filterContainer');
+            const button = document.getElementById('toggleFilters');
+            const isHidden = filterContainer.classList.toggle('hidden');
+            button.textContent = isHidden ? 'Show Filters' : 'Hide Filters';
+        });
+
+    </script>
+</body>
+</html>
