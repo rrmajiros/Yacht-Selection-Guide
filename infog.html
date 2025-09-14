@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Great Loop: A Visual Guide to Your Perfect Motor Yacht</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        .stat-card {
+            background-color: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+        .stat-icon {
+            font-size: 3rem;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #00529B;
+        }
+        .stat-label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #64748b;
+        }
+        .section-title {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #003366;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: #475569;
+            text-align: center;
+            max-width: 48rem;
+            margin: 0 auto 3rem auto;
+        }
+        .llm-button {
+            background-color: #00AEEF;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: background-color 0.2s ease-in-out;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .llm-button:hover {
+            background-color: #008DCC;
+        }
+        .llm-output {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-top: 1rem;
+            min-height: 100px;
+            white-space: pre-wrap;
+            font-size: 0.95rem;
+            color: #334155;
+            box-shadow: inset 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+        }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-[#003366]">The Looper's Guide</div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#overview" class="text-slate-600 hover:text-[#00529B] font-medium">Overview</a>
+                <a href="#dimensions" class="text-slate-600 hover:text-[#00529B] font-medium">Dimensions</a>
+                <a href="#yachts" class="text-slate-600 hover:text-[#00529B] font-medium">Yacht Types</a>
+                <a href="#tech" class="text-slate-600 hover:text-[#00529B] font-medium">Technology</a>
+                <a href="#ai-tools" class="text-slate-600 hover:text-[#00529B] font-medium">AI Tools</a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <section id="overview" class="py-12">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-[#003366] text-center mb-4">Navigating the Dream</h1>
+            <p class="section-subtitle">
+                The Great Loop is a monumental 6,000-mile circumnavigation of Eastern North America. This infographic provides a visual breakdown of the essential specifications and popular vessel choices for prospective "Loopers," helping to demystify the selection of the perfect motor yacht for this year-long adventure.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="stat-card">
+                    <div class="stat-icon text-[#00AEEF]">📏</div>
+                    <div class="stat-value">6,000 mi</div>
+                    <div class="stat-label">Average Journey Distance</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon text-[#00AEEF]">🗓️</div>
+                    <div class="stat-value">~1 Year</div>
+                    <div class="stat-label">Typical Duration</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon text-[#00AEEF]">⚓</div>
+                    <div class="stat-value">40-42 ft</div>
+                    <div class="stat-label">Average Vessel Length</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon text-[#00AEEF]">⛵</div>
+                    <div class="stat-value">~10%</div>
+                    <div class="stat-label">Sailboats on the Loop</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="dimensions" class="py-12">
+            <h2 class="section-title">Critical Vessel Dimensions: The Rules of the Route</h2>
+            <p class="section-subtitle">
+                The Great Loop's diverse waterways impose strict, non-negotiable limits on vessel size. Adhering to these dimensional constraints, particularly for air and water draft, is the single most important factor in ensuring a successful and stress-free journey.
+            </p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold text-[#00529B] mb-4">Bridge Clearance (Air Draft) in Feet</h3>
+                     <p class="text-slate-600 mb-4">
+                        This chart illustrates the maximum vertical clearance for key fixed bridges along various Great Loop routes. The Illinois River bridge at 19.6' is an unavoidable chokepoint. However, a vessel with a lower air draft (e.g., under 17') gains access to more scenic and direct routes like the downtown Chicago River and the full Erie Canal, significantly enhancing route flexibility.
+                    </p>
+                    <div class="chart-container h-80 md:h-96">
+                        <canvas id="airDraftChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold text-[#00529B] mb-4">Water Draft Recommendations</h3>
+                    <p class="text-slate-600 mb-4">
+                        While a 5-foot draft is the maximum recommended for the Loop, a shallower draft provides a significant advantage. This donut chart shows the breakdown of draft suitability. A draft of 4 feet or less is ideal, as it minimizes the risk of grounding, reduces navigational stress in areas like the Trent-Severn Waterway, and opens up access to countless desirable shallow-water anchorages.
+                    </p>
+                    <div class="chart-container h-80 md:h-96">
+                        <canvas id="waterDraftChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="yachts" class="py-12">
+            <h2 class="section-title">Top Motor Yacht Categories for the Loop</h2>
+            <p class="section-subtitle">
+                While many vessel types have completed the journey, three main categories have emerged as favorites among Loopers. Each offers a different balance of fuel efficiency, speed, stability, and living space, catering to diverse cruising styles and budgets.
+            </p>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md flex flex-col">
+                    <h3 class="text-xl font-bold text-[#00529B] mb-2">Trawler Yachts</h3>
+                    <p class="text-slate-600 flex-grow">The most popular choice, favored for their exceptional fuel efficiency at displacement speeds (7-9 knots), robust construction, and spacious, liveaboard-focused layouts. They offer superior stability, making them comfortable for long-term cruising.</p>
+                    <div class="mt-4">
+                        <div class="font-semibold text-slate-700">Popular Models:</div>
+                        <ul class="list-disc list-inside text-slate-600">
+                            <li>Nordhavn (N40, N43)</li>
+                            <li>Grand Banks 42 Classic</li>
+                            <li>Mainship (34, 390, 430)</li>
+                            <li>American Tug (34, 365)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md flex flex-col">
+                    <h3 class="text-xl font-bold text-[#00529B] mb-2">Motor Yachts / Cruisers</h3>
+                    <p class="text-slate-600 flex-grow">These vessels offer a blend of speed and luxury. While consuming more fuel, their ability to plane allows for faster passages to cover long distances or outrun weather. They often feature multiple cabins and ample amenities for comfort.</p>
+                    <div class="mt-4">
+                        <div class="font-semibold text-slate-700">Popular Models:</div>
+                        <ul class="list-disc list-inside text-slate-600">
+                            <li>Beneteau Swift Trawler</li>
+                            <li>Sea Ray 390 Motor Yacht</li>
+                            <li>Targa 41 (Coupé)</li>
+                            <li>Jeanneau NC 895</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md flex flex-col">
+                    <h3 class="text-xl font-bold text-[#00529B] mb-2">Power Catamarans</h3>
+                    <p class="text-slate-600 flex-grow">An increasingly popular option, power catamarans provide exceptional stability, vast living spaces due to their wide beam, and shallow drafts. Their efficiency and responsive handling make them well-suited for the Loop's varied conditions.</p>
+                     <div class="mt-4">
+                        <div class="font-semibold text-slate-700">Popular Models:</div>
+                        <ul class="list-disc list-inside text-slate-600">
+                            <li>Leopard 40 Powercat</li>
+                            <li>Endeavour TrawlerCat</li>
+                            <li>PDQ 34</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="tech" class="py-12">
+            <h2 class="section-title">Essential Onboard Technology</h2>
+            <p class="section-subtitle">
+                Modern marine technology transforms the Great Loop from a navigational challenge into a comfortable and safe adventure. These systems are not just conveniences; they are crucial tools for extended cruising, enhancing operational ease, safety, and self-sufficiency.
+            </p>
+            <div class="bg-white p-8 rounded-lg shadow-lg">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="text-center">
+                        <div class="text-5xl mb-2">📡</div>
+                        <h4 class="text-lg font-bold text-[#00529B] mb-2">Navigation Suite</h4>
+                        <p class="text-slate-600 text-sm">A full suite including Chartplotter, Autopilot, Radar, and AIS is critical for situational awareness, especially when sharing waterways with commercial traffic.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-5xl mb-2">🕹️</div>
+                        <h4 class="text-lg font-bold text-[#00529B] mb-2">Maneuvering Aids</h4>
+                        <p class="text-slate-600 text-sm">Bow and stern thrusters are highly recommended to simplify docking and navigating tight locks, significantly reducing stress for the crew.</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-5xl mb-2">🔋</div>
+                        <h4 class="text-lg font-bold text-[#00529B] mb-2">Power Management</h4>
+                        <p class="text-slate-600 text-sm">A robust electrical system with a generator, large battery bank, and inverter is essential for comfortable, extended periods at anchor without shore power.</p>
+                    </div>
+                     <div class="text-center">
+                        <div class="text-5xl mb-2">⛽</div>
+                        <h4 class="text-lg font-bold text-[#00529B] mb-2">Fuel Range</h4>
+                        <p class="text-slate-600 text-sm">A minimum range of 250 nautical miles is required. A larger range provides more flexibility and peace of mind on long stretches between fuel stops.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ai-tools" class="py-12">
+            <h2 class="section-title">✨ Looper AI Assistant: Your Smart Companion ✨</h2>
+            <p class="section-subtitle">
+                Leverage the power of AI to streamline your Great Loop planning. Get instant checklists or ask any question about your upcoming adventure!
+            </p>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold text-[#00529B] mb-4">✨ Generate Loop Prep Checklist ✨</h3>
+                    <p class="text-slate-600 mb-4">
+                        Get a comprehensive checklist for your Great Loop preparation. This tool can cover boat readiness, provisioning, safety gear, documentation, and more.
+                    </p>
+                    <button class="llm-button" onclick="generatePrepChecklist()">
+                        Generate Checklist ✨
+                    </button>
+                    <div id="checklistOutput" class="llm-output hidden"></div>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <h3 class="text-xl font-bold text-[#00529B] mb-4">✨ Ask a Looping Question ✨</h3>
+                    <p class="text-slate-600 mb-4">
+                        Have a specific question about the Great Loop? Type it below and get an AI-powered answer.
+                    </p>
+                    <textarea id="loopingQuestionInput" rows="3" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#00AEEF] mb-4 text-slate-800" placeholder="e.g., What are the best places to resupply in Florida?"></textarea>
+                    <button class="llm-button" onclick="askLoopingQuestion()">
+                        Ask Question ✨
+                    </button>
+                    <div id="questionOutput" class="llm-output hidden"></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-[#003366] text-white text-center p-4 mt-8">
+        <p>&copy; 2025 The Looper's Visual Guide. All data synthesized from expert reports for informational purposes.</p>
+    </footer>
+
+    <script>
+        const brilliantBlues = {
+            primary: '#00529B', 
+            secondary: '#00AEEF', 
+            accent: '#D1E231', 
+            dark: '#003366', 
+            light: '#B4D455', 
+            text: '#333333'
+        };
+
+        function wrapLabel(str) {
+            const maxLength = 16;
+            if (str.length <= maxLength) {
+                return str;
+            }
+            const words = str.split(' ');
+            const lines = [];
+            let currentLine = '';
+            for (const word of words) {
+                if ((currentLine + word).length > maxLength) {
+                    lines.push(currentLine.trim());
+                    currentLine = '';
+                }
+                currentLine += word + ' ';
+            }
+            lines.push(currentLine.trim());
+            return lines;
+        }
+        
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+              return label.join(' ');
+            } else {
+              return label;
+            }
+        };
+
+        const airDraftData = {
+            labels: [
+                wrapLabel('Illinois River (Mandatory)'), 
+                wrapLabel('Chicago Downtown (Optional)'), 
+                wrapLabel('Erie Canal (Optional)'),
+                wrapLabel('Champlain Canal (Optional)'),
+                wrapLabel('Trent-Severn (Optional)'),
+                wrapLabel('Rideau Canal (Optional)')
+            ],
+            datasets: [{
+                label: 'Max Air Draft (ft)',
+                data: [19.6, 17.6, 15.5, 17, 20, 22],
+                backgroundColor: [
+                    brilliantBlues.primary,
+                    brilliantBlues.secondary,
+                    brilliantBlues.light,
+                    brilliantBlues.primary,
+                    brilliantBlues.secondary,
+                    brilliantBlues.light
+                ],
+                borderColor: brilliantBlues.dark,
+                borderWidth: 2,
+                borderRadius: 5,
+            }]
+        };
+
+        new Chart(document.getElementById('airDraftChart'), {
+            type: 'bar',
+            data: airDraftData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Clearance in Feet'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                           title: tooltipTitleCallback
+                        }
+                    }
+                }
+            }
+        });
+
+        const waterDraftData = {
+            labels: ['Ideal (<= 4 ft)', 'Acceptable (4.1-5 ft)', 'Challenging (> 5 ft)'],
+            datasets: [{
+                label: 'Water Draft Suitability',
+                data: [60, 30, 10],
+                backgroundColor: [
+                    brilliantBlues.primary,
+                    brilliantBlues.secondary,
+                    '#FF6384'
+                ],
+                hoverOffset: 4
+            }]
+        };
+
+        new Chart(document.getElementById('waterDraftChart'), {
+            type: 'doughnut',
+            data: waterDraftData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                           title: tooltipTitleCallback
+                        }
+                    }
+                }
+            }
+        });
+
+        const apiKey = "";
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+
+        async function generatePrepChecklist() {
+            const outputDiv = document.getElementById('checklistOutput');
+            outputDiv.classList.remove('hidden');
+            outputDiv.innerHTML = '<div class="text-center text-gray-500">Generating your checklist...</div>';
+
+            const prompt = `Generate a comprehensive preparation checklist for a first-time Great Loop adventurer. The checklist should cover the following categories:
+            1. Boat Preparation (maintenance, safety gear, spare parts)
+            2. Provisioning (food, water, supplies for extended periods)
+            3. Navigation & Documentation (charts, permits, education)
+            4. Communication & Connectivity (VHF, internet, weather)
+            5. Personal & Health (clothing, medications, fitness)
+            6. Financial & Administrative (budget, mail forwarding, insurance)
+            7. Emergency Preparedness (first aid, emergency contacts, EPIRB)
+            Format it as a clear, easy-to-read list with brief descriptions for each item.`;
+
+            let chatHistory = [];
+            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+            const payload = { contents: chatHistory };
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    outputDiv.innerHTML = text;
+                } else {
+                    outputDiv.innerHTML = '<div class="text-red-500">Error: Could not generate checklist. Please try again.</div>';
+                }
+            } catch (error) {
+                console.error('Error generating checklist:', error);
+                outputDiv.innerHTML = '<div class="text-red-500">Error: Network issue or API call failed.</div>';
+            }
+        }
+
+        async function askLoopingQuestion() {
+            const inputElement = document.getElementById('loopingQuestionInput');
+            const outputDiv = document.getElementById('questionOutput');
+            const userQuestion = inputElement.value.trim();
+
+            if (!userQuestion) {
+                outputDiv.classList.remove('hidden');
+                outputDiv.innerHTML = '<div class="text-red-500">Please enter a question.</div>';
+                return;
+            }
+
+            outputDiv.classList.remove('hidden');
+            outputDiv.innerHTML = '<div class="text-center text-gray-500">Thinking...</div>';
+
+            const prompt = `Answer the following question about the Great Loop in a concise and helpful manner: "${userQuestion}"`;
+
+            let chatHistory = [];
+            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+            const payload = { contents: chatHistory };
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    const text = result.candidates[0].content.parts[0].text;
+                    outputDiv.innerHTML = text;
+                } else {
+                    outputDiv.innerHTML = '<div class="text-red-500">Error: Could not get an answer. Please try rephrasing your question.</div>';
+                }
+            } catch (error) {
+                console.error('Error asking question:', error);
+                outputDiv.innerHTML = '<div class="text-red-500">Error: Network issue or API call failed.</div>';
+            }
+        }
+    </script>
+
+</body>
+</html>
