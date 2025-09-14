@@ -106,6 +106,8 @@
                 <a href="#yachts" class="text-slate-600 hover:text-[#00529B] font-medium">Yacht Types</a>
                 <a href="#tech" class="text-slate-600 hover:text-[#00529B] font-medium">Technology</a>
                 <a href="#ai-tools" class="text-slate-600 hover:text-[#00529B] font-medium">AI Tools</a>
+                <!-- Moved Home link to the end of the navigation bar -->
+                <a href="https://www.majiros.com" class="text-slate-600 hover:text-[#00529B] font-medium">Home</a>
             </div>
         </nav>
     </header>
@@ -317,9 +319,9 @@
             const item = tooltipItems[0];
             let label = item.chart.data.labels[item.dataIndex];
             if (Array.isArray(label)) {
-              return label.join(' ');
+                return label.join(' ');
             } else {
-              return label;
+                return label;
             }
         };
 
@@ -371,7 +373,7 @@
                     },
                     tooltip: {
                         callbacks: {
-                           title: tooltipTitleCallback
+                            title: tooltipTitleCallback
                         }
                     }
                 }
@@ -404,7 +406,7 @@
                     },
                     tooltip: {
                         callbacks: {
-                           title: tooltipTitleCallback
+                            title: tooltipTitleCallback
                         }
                     }
                 }
