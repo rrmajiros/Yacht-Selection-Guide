@@ -412,8 +412,10 @@
                 }
             }
         });
-
-        const apiKey = "";
+        
+        // The placeholder will be replaced by the GitHub Action
+        const apiKey = "INJECT_YOUR_GEMINI_API_KEY_HERE";
+       
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
 
