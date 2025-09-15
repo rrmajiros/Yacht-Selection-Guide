@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy Yacht Selection Guide to GitHub Pages
 
 on:
   push:
@@ -11,6 +11,11 @@ permissions:
   pages: write
   id-token: write
 
+# Prevent concurrent deployments
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
   build-and-deploy:
     environment:
@@ -21,26 +26,52 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        
+      
+      - name: Validate required files
+        run: |
+          if [ ! -f "infog.html" ]; then
+            echo "Error: infog.html not found!"
+            exit 1
+          fi
+          
+          # Check if placeholder exists
+          if ! grep -q "YOUR_GEMINI_API_KEY_HERE" infog.html; then
+            echo "Warning: API key placeholder not found. File may already be processed."
+          fi
+      
       - name: Replace API key placeholder
         run: |
           echo "Before replacement (line 417):"
           sed -n '417p' infog.html
+          
+          # Create backup
+          cp infog.html infog.html.bak
+          
+          # Replace placeholder with actual API key
           sed -i "s/YOUR_GEMINI_API_KEY_HERE/${{ secrets.GEMINI_API_KEY }}/g" infog.html
+          
           echo "After replacement (line 417):"
           sed -n '417p' infog.html
+          
+          # Verify replacement was successful
+          if grep -q "YOUR_GEMINI_API_KEY_HERE" infog.html; then
+            echo "Error: API key replacement failed!"
+            exit 1
+          fi
+          
+          echo "✅ API key replacement successful"
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          
+      
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v4
-        
+      
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: './'
-          
+      
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
