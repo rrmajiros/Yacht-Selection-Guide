@@ -27,30 +27,32 @@ jobs:
         with:
           node-version: '20'
           
-      - name: Debug - Check if secret exists
+      - name: Debug - List all HTML files
         run: |
-          if [ -z "${{ secrets.GEMINI_API_KEY }}" ]; then
-            echo "❌ GEMINI_API_KEY secret is empty or not set!"
+          echo "All HTML files in repository:"
+          find . -name "*.html" -type f
+          
+      - name: Debug - Check for placeholders
+        run: |
+          echo "Searching for placeholders in all HTML files:"
+          find . -name "*.html" -exec grep -Hn "YOUR_GEMINI_API_KEY_HERE" {} \; || echo "No placeholders found"
+          
+      - name: Replace API key placeholder in ALL HTML files
+        run: |
+          echo "Replacing placeholders in all HTML files..."
+          find . -name "*.html" -exec sed -i "s/YOUR_GEMINI_API_KEY_HERE/${{ secrets.GEMINI_API_KEY }}/g" {} \;
+          echo "Replacement complete."
+          
+      - name: Verify replacement worked
+        run: |
+          echo "Checking if any placeholders remain:"
+          if find . -name "*.html" -exec grep -l "YOUR_GEMINI_API_KEY_HERE" {} \; | grep -q .; then
+            echo "ERROR: Placeholders still exist in:"
+            find . -name "*.html" -exec grep -Hn "YOUR_GEMINI_API_KEY_HERE" {} \;
             exit 1
           else
-            echo "✅ GEMINI_API_KEY secret exists (length: ${#GEMINI_API_KEY})"
+            echo "SUCCESS: All placeholders replaced"
           fi
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          
-      - name: Replace API key placeholder
-        run: |
-          echo "Before replacement:"
-          grep -n "YOUR_GEMINI_API_KEY_HERE" index.html || echo "Placeholder not found"
-          sed -i "s/YOUR_GEMINI_API_KEY_HERE/${{ secrets.GEMINI_API_KEY }}/g" index.html
-          echo "After replacement:"
-          if grep -q "YOUR_GEMINI_API_KEY_HERE" index.html; then
-            echo "❌ Placeholder still exists!"
-          else
-            echo "✅ Placeholder was replaced"
-          fi
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           
       - name: Setup Pages
         id: pages
