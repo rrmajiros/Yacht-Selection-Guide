@@ -22,37 +22,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          
-      - name: Debug - List all HTML files
+      - name: Replace API key placeholder
         run: |
-          echo "All HTML files in repository:"
-          find . -name "*.html" -type f
-          
-      - name: Debug - Check for placeholders
-        run: |
-          echo "Searching for placeholders in all HTML files:"
-          find . -name "*.html" -exec grep -Hn "YOUR_GEMINI_API_KEY_HERE" {} \; || echo "No placeholders found"
-          
-      - name: Replace API key placeholder in ALL HTML files
-        run: |
-          echo "Replacing placeholders in all HTML files..."
-          find . -name "*.html" -exec sed -i "s/YOUR_GEMINI_API_KEY_HERE/${{ secrets.GEMINI_API_KEY }}/g" {} \;
-          echo "Replacement complete."
-          
-      - name: Verify replacement worked
-        run: |
-          echo "Checking if any placeholders remain:"
-          if find . -name "*.html" -exec grep -l "YOUR_GEMINI_API_KEY_HERE" {} \; | grep -q .; then
-            echo "ERROR: Placeholders still exist in:"
-            find . -name "*.html" -exec grep -Hn "YOUR_GEMINI_API_KEY_HERE" {} \;
-            exit 1
-          else
-            echo "SUCCESS: All placeholders replaced"
-          fi
+          echo "Before replacement (line 417):"
+          sed -n '417p' infog.html
+          sed -i "s/YOUR_GEMINI_API_KEY_HERE/${{ secrets.GEMINI_API_KEY }}/g" infog.html
+          echo "After replacement (line 417):"
+          sed -n '417p' infog.html
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           
       - name: Setup Pages
         id: pages
