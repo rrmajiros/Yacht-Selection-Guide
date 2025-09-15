@@ -1,5 +1,9 @@
 name: Deploy to GitHub Pages
-
+run: |
+    echo "Checking infog.html line 417 before upload:"
+    sed -n '417p' infog.html
+    echo "Full context around API key:"
+    grep -n "const apiKey" infog.html
 on:
   push:
     branches:
