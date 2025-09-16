@@ -460,47 +460,48 @@
             }
         }
 
-        async function askLoopingQuestion() {
-            const inputElement = document.getElementById('loopingQuestionInput');
-            const outputDiv = document.getElementById('questionOutput');
-            const userQuestion = inputElement.value.trim();
+    async function askLoopingQuestion() {
+    const inputElement = document.getElementById('loopingQuestionInput');
+    const outputDiv = document.getElementById('questionOutput');
+    const userQuestion = inputElement.value.trim();
 
-            if (!userQuestion) {
-                outputDiv.classList.remove('hidden');
-                outputDiv.innerHTML = '<div class="text-red-500">Please enter a question.</div>';
-                return;
-            }
+    if (!userQuestion) {
+        outputDiv.classList.remove('hidden');
+        outputDiv.innerHTML = '<div class="text-red-500">Please enter a question.</div>';
+        return;
+    }
 
-            outputDiv.classList.remove('hidden');
-            outputDiv.innerHTML = '<div class="text-center text-gray-500">Thinking...</div>';
+    outputDiv.classList.remove('hidden');
+    outputDiv.innerHTML = '<div class="text-center text-gray-500">Thinking...</div>';
 
-            const prompt = `Answer the following question about the Great Loop in a concise and helpful manner: "${userQuestion}"`;
+    const prompt = `Answer the following question about the Great Loop in a concise and helpful manner: "${userQuestion}"`;
 
-            let chatHistory = [];
-            chatHistory.push({ role: "user", parts: [{ text: prompt }] });
-            const payload = { contents: chatHistory };
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+    let chatHistory = [];
+    chatHistory.push({ role: "user", parts: [{ text: prompt }] });
+    const payload = { contents: chatHistory };
+    
+    // **Removed the const apiUrl line here**
 
-            try {
-                const response = await fetch(API_URL + GEMINI_API_KEY, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-                const result = await response.json();
-                if (result.candidates && result.candidates.length > 0 &&
-                    result.candidates[0].content && result.candidates[0].content.parts &&
-                    result.candidates[0].content.parts.length > 0) {
-                    const text = result.candidates[0].content.parts[0].text;
-                    outputDiv.innerHTML = text;
-                } else {
-                    outputDiv.innerHTML = '<div class="text-red-500">Error: Could not get an answer. Please ask an easier question.</div>';
-                }
-            } catch (error) {
-                console.error('Error asking question:', error);
-                outputDiv.innerHTML = '<div class="text-red-500">Error: Network issue or API call failed.</div>';
-            }
+    try {
+        const response = await fetch(API_URL + GEMINI_API_KEY, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        const result = await response.json();
+        if (result.candidates && result.candidates.length > 0 &&
+            result.candidates[0].content && result.candidates[0].content.parts &&
+            result.candidates[0].content.parts.length > 0) {
+            const text = result.candidates[0].content.parts[0].text;
+            outputDiv.innerHTML = text;
+        } else {
+            outputDiv.innerHTML = '<div class="text-red-500">Error: Could not get an answer. Please ask an easier question.</div>';
         }
+    } catch (error) {
+        console.error('Error asking question:', error);
+        outputDiv.innerHTML = '<div class="text-red-500">Error: Network issue or API call failed.</div>';
+    }
+}
     </script>
 
 </body>
