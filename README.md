@@ -1,44 +1,44 @@
-# Project Development and Troubleshooting: A Case Study
+### The Great Loop Yacht Selection Guide
 
-This document outlines the key steps and solutions taken to diagnose and resolve issues with the `Yacht Selection Guide` project, focusing on a non-functional AI assistant tool. The process involved systematic debugging of both the core HTML/JavaScript and the automated GitHub Pages deployment workflow.
+### Project Overview
 
------
+The **Great Loop Yacht Selection Guide** is a two-page web application designed to help prospective "Loopers" choose the ideal motor yacht for their journey. The project consists of two linked pages: a **Yacht Selector** and a **Visual Infographic**.
 
-### Phase 1: Diagnosing the Initial Problem
+The **Yacht Selector** is an interactive filtering tool that helps users find suitable yachts based on critical parameters like air draft, water draft, length, and fuel range.
 
-The primary challenge was a non-functional AI assistant on the `infog.html` page, which was preventing the display of an AI-generated checklist and question responses. An initial review of the browser's console logs revealed a missing or invalid API key, indicating the core issue was with the JavaScript code itself.
+The **Visual Infographic** provides a data-rich overview of the Great Loop, highlighting key dimensional constraints, popular vessel types, and essential onboard technology. It also features a **Looper AI Assistant** powered by a large language model to provide instant checklists and answer user questions about the journey.
 
-**The Root Cause**: The JavaScript code had a variable name mismatch. It declared the API key using `const apiKey = "YOUR_GEMINI_API_KEY_HERE";` but then attempted to use a different variable name, `GEMINI_API_KEY`, in its `fetch` calls. This caused a `ReferenceError` at runtime.
+---
 
-**The Solution**: The code was updated to use a single, consistent variable name, `GEMINI_API_KEY`, for both the declaration and its subsequent use. Additionally, a redundant variable declaration was removed to clean up the code.
+### Page 1: Yacht Selector (`index.html`) 🛥️
 
-```javascript
-// Corrected code with a consistent variable name
-const GEMINI_API_KEY = "YOUR_GEMINI_API_KEY_HERE";
-```
+#### ✨ Key Features
 
------
+* **Interactive Filters**: Users can dynamically filter a database of motor yachts by entering their desired **max air draft**, **max water draft**, **max length**, and **min fuel range**.
+* **Real-time Results**: The application instantly displays a list of yachts that match the user's criteria, including key specifications and features for each vessel.
+* **User-Friendly Interface**: The page is styled with **Tailwind CSS** for a modern, clean, and responsive design. Input fields include helpful hints to guide the user.
+* **Dynamic Visibility**: The results section is only shown when the user begins to apply filters, creating a clean initial view.
+* **Data-Driven Recommendations**: The application's core logic is a **JavaScript array** containing a curated list of yacht data, making the recommendations accurate and immediate without requiring an external database.
 
-### Phase 2: Troubleshooting the GitHub Action
+#### 🛠️ Technical Stack
 
-After the JavaScript was corrected, the AI tool remained non-functional on the live GitHub Pages site. This indicated that the automated deployment process was failing to correctly inject the API key.
+* **Frontend**: HTML, JavaScript, and Tailwind CSS.
+* **Data**: A hard-coded **JavaScript array** containing a curated list of motor yacht specifications.
+* **Logic**: Pure JavaScript for filtering, rendering, and handling user interface interactions.
 
-**The Root Cause**: The issue was a subtle configuration error within the GitHub Actions workflow file (`.yml`). The workflow's `sed` command, which is responsible for replacing the API key placeholder, was configured to find the placeholder in `index.html`, while the actual project file was named `infog.html`. This meant the workflow was successfully modifying the wrong file, leaving the correct file unchanged.
+---
 
-**The Solution**: The `sed` command in the workflow file was updated to specifically target `infog.html`.
+### Page 2: Visual Infographic (`infog.html`) 📊
 
-**Original (Incorrect) Command:**
+#### ✨ Key Features
 
-```bash
-sed -i "s/YOUR_GEMINI_API_KEY_HERE/${{ secrets.GEMINI_API_KEY }}/g" index.html
-```
+* **Data Visualization**: The page uses **Chart.js** to create an interactive bar chart and donut chart. These visuals clearly demonstrate critical dimensional limitations for bridges (**air draft**) and waterways (**water draft**).
+* **Categorized Information**: Content is structured into clear sections: an **overview** of the Great Loop, a breakdown of **critical dimensions**, a guide to **popular yacht categories**, and a summary of **essential technology**.
+* **Looper AI Assistant**: An AI-powered tool allows users to either generate a comprehensive Great Loop preparation checklist or ask a specific question. This feature uses a **large language model (LLM)** for generating dynamic, context-specific content.
+* **Responsive Design**: The entire page is designed with Tailwind CSS to be fully responsive and accessible on both desktop and mobile devices.
 
-**Corrected Command:**
+#### 🛠️ Technical Stack
 
-```bash
-sed -i "s/YOUR_GEMINI_API_KEY_HERE/${{ secrets.GEMINI_API_KEY }}/g" infog.html
-```
-
-### Final Conclusion
-
-By systematically debugging both the front-end code and the backend deployment pipeline, the project was successfully fixed. The working solution demonstrates the importance of consistency in code variables and the need for meticulous configuration in automated workflows, where even a small typo can lead to a complete failure.
+* **Frontend**: HTML, JavaScript, and Tailwind CSS.
+* **Charting Library**: **Chart.js** is used to render the data visualizations.
+* **LLM Integration**: The AI features are powered by a **large language model**, which is called via JavaScript functions. This integration handles the generation of dynamic, context-specific content.
